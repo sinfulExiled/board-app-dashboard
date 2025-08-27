@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 type Task = {
+  category: string;
   id: string;
   title: string;
   status: "todo" | "inprogress" | "approved" | "reject";
@@ -10,9 +11,9 @@ type Store = {
   tasks: Task[];
   searchQuery: string;
   loadTasks: (data: Task[]) => void;
-  moveTask: (id: string, targetId: string, position?: "end" | "before") => void;
-  setSearchQuery: (q: string) => void;
-  restoreTasks: (data: Task[]) => void;
+  moveTask: (taskId: string, targetId: string, position: 'before' | 'end') => void;
+  setSearchQuery: (query: string) => void;
+  restoreTasks: (newTasks: Task[]) => void;
 };
 
 export const useTaskStore = create<Store>((set) => ({
@@ -24,12 +25,12 @@ export const useTaskStore = create<Store>((set) => ({
     set({ tasks: saved ? JSON.parse(saved) : data });
   },
 
-  moveTask: (id, targetId, position = "end") =>
+  moveTask: (taskId, targetId, position = "end") =>
     set((state) => {
-      const task = state.tasks.find((t) => t.id === id);
+      const task = state.tasks.find((t) => t.id === taskId);
       if (!task) return state;
 
-      let newTasks = state.tasks.filter((t) => t.id !== id);
+      let newTasks = state.tasks.filter((t) => t.id !== taskId);
 
       if (position === "end") {
         task.status = targetId as Task["status"];

@@ -2,6 +2,7 @@
 import { useDroppable } from "@dnd-kit/core";
 import TaskCard from "./TaskCard";
 import { Plus, MoreHorizontal } from "lucide-react";
+import { SwimlaneProps } from "../types";
 
 const STATUS_STYLES: Record<string, string> = {
   todo: "bg-gray-100 text-gray-700",
@@ -17,11 +18,18 @@ const STATUS_LABELS: Record<string, string> = {
   reject: "Reject",
 };
 
-export default function Swimlane({ status, tasks }: any) {
-  const { setNodeRef } = useDroppable({ id: status });
+export default function Swimlane({ status, tasks, isOver = false, activeTaskId }: SwimlaneProps & { activeTaskId?: string }) {
+  const { setNodeRef } = useDroppable({ 
+    id: `swimlane-${status}`,
+  });
 
   return (
-    <div className="flex-1 bg-gray-50 p-4 rounded-xl">
+    <div
+      ref={setNodeRef}
+      className={`flex-1 bg-gray-50 p-4 rounded-xl transition-all duration-200 ${
+        isOver ? "ring-2 ring-blue-400 bg-blue-50" : ""
+      }`}
+    >
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <span
@@ -38,10 +46,21 @@ export default function Swimlane({ status, tasks }: any) {
         </button>
       </div>
 
-      <div ref={setNodeRef} className="min-h-[200px] space-y-3">
-        {tasks.map((task: any) => (
-          <TaskCard key={task.id} task={task} />
+      <div className="min-h-[200px] space-y-3 transition-all duration-200">
+        {tasks.map((task, index: number) => (
+          <TaskCard 
+            key={task.id} 
+            task={task} 
+            showDropIndicator={isOver && index === 0}
+            isActive={task.id === activeTaskId}
+            isOver={isOver}
+          />
         ))}
+        {tasks.length === 0 && isOver && (
+          <div className="min-h-[100px] flex items-center justify-center border-2 border-dashed border-blue-300 rounded-lg bg-blue-50/50 transition-all duration-200">
+            <span className="text-blue-500 text-sm">Drop here</span>
+          </div>
+        )}
       </div>
     </div>
   );
