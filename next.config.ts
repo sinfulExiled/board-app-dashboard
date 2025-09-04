@@ -3,7 +3,7 @@
 const nextConfig = {
   output: "export",
   basePath: "/board-app-dashboard",
-  assetPrefix: "./board-app-dashboard/",
+  assetPrefix: "./board-app-dashboard",
   trailingSlash: true,
 
   images: {
