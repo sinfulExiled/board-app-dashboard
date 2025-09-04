@@ -1,15 +1,8 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  devIndicators: false,
-
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  basePath: "/board-app-dashboard",
+  assetPrefix: "/board-app-dashboard",
+  output: "export",
 };
 
-export default nextConfig;
+module.exports = nextConfig;
