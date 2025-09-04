@@ -1,18 +1,20 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  basePath: "/board-app-dashboard",
 
+const nextConfig = {
   output: "export",
+  basePath: "",
+  assetPrefix: "./",
   trailingSlash: true,
 
   images: {
-    unoptimized: true,
+    unoptimized: true, 
   },
-  devIndicators: false,
 
   eslint: {
     ignoreDuringBuilds: true,
   },
+
+  devIndicators: false,
 };
 
 module.exports = nextConfig;
