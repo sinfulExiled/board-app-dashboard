@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DndContext,
   DragOverlay,
@@ -22,11 +22,21 @@ export default function Board() {
   const [activeTask, setActiveTask] = useState<Task | null>(null);
   const [overId, setOverId] = useState<string | null>(null);
 
-  // Configure sensors for better drag handling
+  useEffect(() => {
+    if (tasks.length === 0) {
+      restoreTasks(
+        initialData.map((task) => ({
+          ...task,
+          status: task.status as "todo" | "inprogress" | "approved" | "reject",
+        }))
+      );
+    }
+  }, [restoreTasks, tasks.length]);
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 8, // Require 8px movement before drag starts
+        distance: 8,
       },
     })
   );
