@@ -2,8 +2,8 @@
 
 const nextConfig = {
   output: "export",
-  basePath: "",
-  assetPrefix: "./",
+  basePath: "/board-app-dashboard",
+  assetPrefix: "./board-app-dashboard/",
   trailingSlash: true,
 
   images: {
