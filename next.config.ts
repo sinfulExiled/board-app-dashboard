@@ -1,7 +1,7 @@
 const nextConfig = {
   output: "export",
-  basePath: "/board-app-dashboard", 
-  assetPrefix: "/board-app-dashboard/", 
+  basePath: "", 
+  assetPrefix: "/", 
   trailingSlash: true,
   images: { unoptimized: true },
   eslint: { ignoreDuringBuilds: true },
